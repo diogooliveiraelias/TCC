@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <%- include('headEstatico'); %>
+    <link rel="stylesheet" type="text/css" href="css/login.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+</head>
+
+<body>
+  <section class="vh-20" style="background-color: hsl(0, 0%, 96%)">
+    <div class="container py-5 h-10">
+      <div class="row d-flex justify-content-center align-items-center h-20">
+        <div class="col col-xl-10">
+          <div class="card" style="border-radius: 1rem;">
+            <div class="row g-0">
+
+              <div class="col-md-6 col-lg-5 d-flex align-items-center"> 
+                <img src="/imagens/Mental+Health.png"
+                  alt="mental health" class="img-fluid" style="border-radius: 1rem;" />
+              </div>
+
+              <div class="col-md-6 col-7 d-flex align-items-center">
+                <div class="card-body p-4 p-5 text-black">
+
+                  <form action="/cadastro" method="POST">
+
+                    <% if (mensagem && mensagem.length> 0) { %>
+                      <div class="alert alert-danger">
+                        <%= mensagem %>
+                      </div>
+                      <% } %>
+
+                        <h1 class="fw-normal" style="letter-spacing: 1px;">Cadastro</h1>
+
+                        <!-- nome de usuário -->
+                        <div class="form-outline mb-1">
+                          <label class="form-label" for="nome">Nome de usuário:</label>
+                          <input type="text" id="nome" name="nome" class="form-control" />
+                        </div>
+
+                        <!--email-->
+                        <div class="form-outline mb-1">
+                          <label class="form-label" for="email">Email:</label>
+                          <input type="email" id="email" name="email" class="form-control" />
+                        </div>
+
+                        <!--senha-->
+                        <div class="form-outline mb-1">
+                          <label class="form-label" for="senha">Senha:</label>
+                          <input type="password" id="senha" name="senha" class="form-control" />
+                        </div>
+
+                        <!--confirmação enha-->
+                        <div class="form-outline mb-1">
+                          <label class="form-label" for="confSenha">Confirmar senha:</label>
+                          <input type="password" id="confSenha" name="confSenha" class="form-control" />
+                        </div>
+
+                        <div class="pt-0 mb-0">
+                          <button class="btn btn-block" type="submit" id="btnCadastro">Cadastrar</button>
+                        </div>
+
+                        <p class="pb-0 mb-0" style="color: #000000;">Já possui uma conta?
+                          <a href="/login" style="color: #393f81;">Realize login</a>
+                        </p>
+                  </form>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</body>
+
+</html>

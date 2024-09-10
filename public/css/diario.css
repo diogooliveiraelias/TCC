@@ -1,0 +1,44 @@
+#calendar {
+    margin: 0 auto;
+    width: 90%;
+    height: 650px;
+    overflow: auto;
+}
+
+.fc-event {
+    border: none;
+    outline: none;
+}
+
+/* Seleção de humor */
+[type=radio] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+[type=radio]+img {
+    cursor: pointer;
+}
+
+[type=radio]:checked+img {
+    opacity: 0.5;
+}
+
+#calendar {
+    margin-top: 10px;
+}
+
+#modal,
+#modalVisualizar {
+    text-align: center;
+}
+
+.clickable-content {
+    cursor: pointer;
+}
+
+.strike-through-text {
+    text-decoration: line-through;
+}

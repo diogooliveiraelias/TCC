@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <%- include('head'); %>
+</head>
+
+<body>
+    <div class="containerPerfil">
+        <div class="card" style="width: 18rem;">
+            <div class="card-body" id="cardPerfil">
+                <div class="imagem">
+                    <img class="imagem-perfil" src="/imagens/user_icon.png">
+                </div><br>
+
+                <h5 class="card-title">Seu perfil</h5>
+                <p class="card-text">Nome de usuário: <%= dadosNome %>
+                </p>
+                <p class="card-text">Email: <%= dadosEmail %>
+                </p>
+
+                <form action="/editaPerfil/<%=dadosId%>" method="GET">
+                    <div class="form-group">
+                    <button type="submit" class="btn" id="btn">Atualizar Perfil</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

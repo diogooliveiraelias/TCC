@@ -1,0 +1,105 @@
+.btn {
+    border: none;
+    outline: none;
+}
+
+#logo {
+    font-style: black;
+}
+
+.item {
+    display: inline-block;
+}
+
+.right-aligned-text {
+    text-align: right;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.box1,
+.box2 {
+    width: 300px;
+    height: 300px;
+    margin: 50px;
+}
+
+.btn-abrir {
+    color: white;
+    font-size: 25px;
+}
+
+table,
+th,
+td {
+    border: 1px solid rgb(12, 12, 12);
+    margin-top: 25px;
+}
+
+th,
+td {
+    width: 75px;
+    height: 75px;
+}
+
+a {
+    text-decoration: none;
+}
+
+.navbar {
+    display: flex;
+    background-color: #84A4FC;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.links {
+    margin-left: auto;
+    margin-right: 50px;
+}
+
+.logo {
+    display: flex;
+    width: 250px;
+    margin-left: 30px;
+}
+
+.imagem-logo {
+    
+    width: 40px;
+    height: 40px;
+}
+
+nav a {
+    color: white;
+    font-size: 25px;
+    display: block;
+    padding: 12px 10px 32px;
+}
+
+main {
+    padding: 10px;
+    transition: margin-left 0.5s;
+}
+
+.card {
+    display: flex;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(50%, 50%);
+}
+
+.imagem{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.imagem-perfil{
+    width: 100px;
+    height: 100px;
+}

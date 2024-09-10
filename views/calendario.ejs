@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang='pt-br'>
+
+<head>
+  <meta charset='utf-8'>
+  <%- include('head'); %>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="css/diario.css" />
+    <link rel="stylesheet" type="text/css" href="css/modalRegistro.css" />
+
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js'></script>
+    <script src='fullcalendar/dist/index.global.js'></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/css/bootstrap.min.css"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></script>
+
+</head>
+
+<body>
+  <div id="calendar">
+    <script>
+      let calendar;
+      initCalendar();
+      function initCalendar() {
+        document.addEventListener('DOMContentLoaded', function () {
+          var calendarEl = document.getElementById('calendar');
+
+          calendar = new FullCalendar.Calendar(calendarEl, {
+
+            initialView: 'dayGridMonth',
+            locale: 'pt-br',
+            events: "/events",
+            navlinks: true,
+            editable: true,
+            clickable: true,
+            selectable: false,
+            headerToolbar: {
+              left: "prev,next today",
+              locale: "pt-br",
+              center: "title",
+              right: "",
+              end: "addEventButton",
+            },
+
+
+            dateClick: function (info) {
+              $('#modal').modal('show');
+              var data = info.dateStr;
+              $('#save').on('click', function () {
+                var startDate = data;
+
+                var diario = $('#diario').val();
+                var humor = document.querySelector('input[name="humor"]:checked').value;
+
+                const corMap = {
+                  '1': '#256b2e',
+                  '2': '#59ae3e',
+                  '3': '#FBE527',
+                  '4': '#f98718',
+                  '5': '#ef1a26'
+                };
+
+                var cor = corMap[humor];
+
+                var tempoExercicio = $('#tempoExercicio').val();
+                var descricaoExercicio = $('#descricaoExercicio').val();
+
+                var horaDormiu = $('#horaDormiu').val();
+                var horaAcordou = $('#horaAcordou').val();
+
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', '/events', true);
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                xhr.onload = function () {
+                  if (xhr.status === 200) {
+                    calendar.refetchEvents();
+                  } else {
+                    alert('Ocorreu um erro');
+                  }
+                };
+                xhr.send(JSON.stringify({
+                  startDate: startDate,
+                  backgroundColor: cor,
+                  diario: diario,
+                  humor: humor,
+                  id_usuario: "<%= id_usuario %>",
+
+                  tempoExercicio: tempoExercicio,
+                  descricaoExercicio: descricaoExercicio,
+
+                  horaDormiu: horaDormiu,
+                  horaAcordou: horaAcordou,
+                }));
+                fechar();
+                location.reload();
+              });
+
+            },
+
+            eventClick: function (info) {
+              $('#modalVisualizar').modal('show');
+              var idEvento = info.event.id;
+              var startDate = info.event.start;
+
+              var humorValue = info.event.extendedProps.humor;
+              $('.humor-radio[value="' + humorValue + '"]').prop('checked', true);
+              $('#diario2').val(info.event.extendedProps.diario);
+
+              var tempoExercicio = info.event.extendedProps.tempoExercicio;
+              var descricaoExercicio = info.event.extendedProps.descricaoExercicio;
+
+              var horaDormiu = info.event.extendedProps.horaDormiu;
+              var horaAcordou = info.event.extendedProps.horaAcordou;
+              if (tempoExercicio !== null && descricaoExercicio !== null) {
+                $('#tempoExercicio2').val(tempoExercicio);
+                $('#descricaoExercicio2').val(descricaoExercicio);
+              }
+
+              if (horaDormiu !== null && horaAcordou !== null) {
+                console.log('asd')
+                $('#horaDormiu2').val(horaDormiu);
+                $('#horaAcordou2').val(horaAcordou);
+              }
+
+              $('#saveAlt').on('click', function () {
+
+                const corMap2 = {
+                  '1': '#256b2e',
+                  '2': '#59ae3e',
+                  '3': '#FBE527',
+                  '4': '#f98718',
+                  '5': '#ef1a26'
+                };
+
+                var startDate2 = startDate;
+                var diario2 = $('#diario2').val();
+
+                var humor2 = document.querySelector('input[name="humor2"]:checked').value;
+                var cor2 = corMap2[humor2];
+
+                var tempoExercicio2 = $('#tempoExercicio2').val();
+                var descricaoExercicio2 = $('#descricaoExercicio2').val();
+
+                var horaDormiu2 = $('#horaDormiu2').val();
+                var horaAcordou2 = $('#horaAcordou2').val();
+
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', '/events', true);
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                xhr.onload = function () {
+                  if (xhr.status === 200) {
+                    calendar.refetchEvents();
+                  } else {
+                    alert('Ocorreu um erro');
+                  }
+                };
+                xhr.send(JSON.stringify({
+                  startDate: startDate2,
+                  backgroundColor: cor2,
+                  diario: diario2,
+                  humor: humor2,
+                  id_usuario: "<%= id_usuario %>",
+
+                  tempoExercicio: tempoExercicio2,
+                  descricaoExercicio: descricaoExercicio2,
+
+                  horaDormiu: horaDormiu2,
+                  horaAcordou: horaAcordou2,
+                }));
+                const route = '/deletaEvento';
+                const url = `${route}/${idEvento}`;
+
+                fetch(url, {
+                  method: 'GET',
+                  headers: {
+                    'Content-Type': 'application/json',
+                  },
+                })
+
+                calendar.refetchEvents();
+                $('#modalVisualizar').modal('hide');
+                location.reload();
+              })
+
+
+              $('#delete').on('click', function () {
+                const route = '/deletaEvento';
+                const url = `${route}/${idEvento}`;
+
+                fetch(url, {
+                  method: 'GET',
+                  headers: {
+                    'Content-Type': 'application/json',
+                  },
+                })
+                $('#modalVisualizar').modal('hide');
+                location.reload();
+                console.log(url);
+              });
+            },
+          });
+          calendar.render();
+        });
+      }
+
+      function fechar() {
+        $('#modal').modal('hide');
+        $('#modalVisualizar').modal('hide');
+        //Esvazia os valores dos campos da modal quando ela fecha
+        diario.value = '';
+
+        tempoExercicio.value = '';
+        descricaoExercicio.value = '';
+
+        horaAcordou.value = '';
+        horaDormiu.value = '';
+
+        const radioOptions = document.querySelectorAll('input[name="humor"]');
+        radioOptions.forEach(function (option) {
+          option.checked = false;
+        });
+      }
+
+
+
+    </script>
+  </div>
+
+  <!-- Modal adiciona registro-->
+  <div class="modal fade" id="modal">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="ModalLabel">Inserir registro</h5>
+        </div>
+        <div class="modal-body">
+          <div class="row g-0">
+            <div class="col-md-6">
+              <div class="status p-3">
+                <div class="form-group" id="humor">
+                  <h5>Como você se sente?</h5>
+                  <label>
+                    <input type="radio" name="humor" id="humor" value="1">
+                    <img src="/imagens/1.png" alt="Feliz">
+                  </label>
+
+                  <label>
+                    <input type="radio" name="humor" id="humor" value="2">
+                    <img src="/imagens/2.png" alt="Feliz">
+                  </label>
+
+                  <label>
+                    <input type="radio" name="humor" id="humor" value="3">
+                    <img src="/imagens/3.png" alt="Feliz">
+                  </label>
+
+                  <label>
+                    <input type="radio" name="humor" id="humor" value="4">
+                    <img src="/imagens/4.png" alt="Feliz">
+                  </label>
+
+                  <label>
+                    <input type="radio" name="humor" id="humor" value="5">
+                    <img src="/imagens/5.png" alt="Feliz">
+                  </label><br><br>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="status p-3">
+
+                <input id="btnSono" class="form-control" type="button" value="Adicionar Registro de Sono">
+
+                <div id="sono" style="display: none;">
+                  <label for="horaDormiu">Selecione o horário em que você foi dormir: </label><br>
+                  <input class="form-control" type="time" name="horaDormiu" id="horaDormiu" /><br>
+
+                  <label for="horaAcordou">Selecione o horário em que você acordou: </label><br>
+                  <input class="form-control" type="time" name="horaAcordou" id="horaAcordou" /><br>
+                </div><br>
+              </div>
+              <script>
+                var button1 = document.getElementById("btnSono");
+                var myDiv1 = document.getElementById("sono");
+
+                function toggle1() {
+                  myDiv1.style.display = myDiv1.style.display === "none" ? "block" : "none";
+                }
+                button1.addEventListener("click", toggle1, false);
+              </script>
+            </div>
+          </div>
+
+          <div class="row g-0">
+            <div class="col-md-6">
+              <div class="status p-3">
+                <div class="form-group">
+                  <label for="diario">Como foi o seu dia?</label><br>
+                  <textarea class="form-control" rows="10" cols="40" maxlength="500" id="diario"
+                    name="diario"></textarea>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="status p-3">
+                <input id="btnEx" class="form-control" type="button" value="Adicionar Registro de exercício físico">
+
+                <div id="ex" class="form-control" style="display: none;">
+
+                  <label for="tempoExercicio">Duração do exercício: </label><br>
+                  <input type="time" class="form-control" id="tempoExercicio" name="tempoExercicio"><br>
+
+                  <label for="descricaoExercicio">Descrição do exercício</label><br>
+                  <input type="textarea" class="form-control" id="descricaoExercicio" name="descricaoExercicio"><br>
+
+                </div>
+              </div>
+              <script>
+                var button2 = document.getElementById("btnEx");
+                var myDiv2 = document.getElementById("ex");
+
+                function toggle2() {
+                  myDiv2.style.display = myDiv2.style.display === "none" ? "block" : "none";
+                }
+                button2.addEventListener("click", toggle2, false);
+              </script>
+            </div>
+            <div>
+              <button type="button" class="btn btn-default" onclick="fechar()">Cancelar</button>
+              <button type="button" class="btn btn-primary" id="save">Salvar</button><br><br>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--Modal visualiza registro-->
+  <div class="modal fade" id="modalVisualizar">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="ModalLabel">Visualizar registro</h5>
+        </div>
+        <div class="modal-body">
+          <div class="row g-0">
+            <div class="col-md-6">
+              <div class="status p-3">
+                <div class="form-group" id="humorShow">
+                  <h5>Como você se sente?</h5>
+                  <label>
+                    <input type="radio" name="humor2" class="humor-radio" id="humor" value="1">
+                    <img src="/imagens/1.png" alt="Feliz">
+                  </label>
+
+                  <label>
+                    <input type="radio" name="humor2" class="humor-radio" id="humor" value="2">
+                    <img src="/imagens/2.png" alt="Feliz">
+                  </label>
+
+                  <label>
+                    <input type="radio" name="humor2" class="humor-radio" id="humor" value="3">
+                    <img src="/imagens/3.png" alt="Feliz">
+                  </label>
+
+                  <label>
+                    <input type="radio" name="humor2" class="humor-radio" id="humor" value="4">
+                    <img src="/imagens/4.png" alt="Feliz">
+                  </label>
+
+                  <label>
+                    <input type="radio" name="humor2" class="humor-radio" id="humor" value="5">
+                    <img src="/imagens/5.png" alt="Feliz">
+                  </label><br><br>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="status p-3">
+
+                <input id="btnSono3" class="form-control" type="button" value="Adicionar Registro de Sono">
+
+                <div id="sono3" style="display: none;">
+                  <label for="horaDormiu2">Selecione o horário em que você foi dormir: </label><br>
+                  <input class="form-control" type="time" name="horaDormiu2" id="horaDormiu2" /><br>
+
+                  <label for="horaAcordou2">Selecione o horário em que você acordou: </label><br>
+                  <input class="form-control" type="time" name="horaAcordou2" id="horaAcordou2" /><br>
+                </div><br>
+
+                <script>
+                  var button3 = document.getElementById("btnSono3");
+                  var myDiv3 = document.getElementById("sono3");
+
+                  function toggle3() {
+                    myDiv3.style.display = myDiv3.style.display === "none" ? "block" : "none";
+                  }
+                  button3.addEventListener("click", toggle3, false);
+                </script>
+              </div>
+            </div>
+          </div>
+          <div class="row g-0">
+            <div class="col-md-6">
+              <div class="status p-3">
+                <div class="form-group">
+                  <label for="diariShow">Como foi o seu dia?</label><br>
+                  <textarea class="form-control" rows="10" cols="40" maxlength="500" id="diario2"
+                    name="diarioShow"></textarea>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="status p-3">
+                <input id="btnEx4" class="form-control" type="button" value="Adicionar Registro de exercício físico">
+
+                <div id="ex4" class="form-control" style="display: none;">
+
+                  <label for="tempoExercicio2">Duração do exercício: </label><br>
+                  <input type="time" class="form-control" id="tempoExercicio2" name="tempoExercicio2"><br>
+
+                  <label for="descricaoExercicio2">Descrição do exercício</label><br>
+                  <input type="textarea" class="form-control" id="descricaoExercicio2" name="descricaoExercicio2"><br>
+                </div>
+                <script>
+                  var button4 = document.getElementById("btnEx4");
+                  var myDiv4 = document.getElementById("ex4");
+
+                  function toggle4() {
+                    myDiv4.style.display = myDiv4.style.display === "none" ? "block" : "none";
+                  }
+                  button4.addEventListener("click", toggle4, false);
+                </script>
+              </div>
+            </div>
+            <div>
+              <button type="button" class="btn btn-default" onclick="fechar()">Cancelar</button>
+              <button type="button" class="btn btn-primary" id="saveAlt">Salvar</button>
+              <button type="button" class="btn btn-danger" id="delete">Excluir registro</button><br><br>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</body>
+
+</html>

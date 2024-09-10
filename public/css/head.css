@@ -1,0 +1,78 @@
+html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+.vh-30 {
+    min-height: 100%;
+}
+
+.logo {
+    display: flex;
+    width: 250px;
+    margin-left: 30px;
+    font-style: black;
+}
+
+.imagem-logo {
+    width: 40px;
+    height: 40px;
+}
+
+.navbar {
+    display: flex;
+    background-color: #84A4FC;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.linksTelas li {
+    display: inline-block;
+    margin: 10px 10px 10px 10px;
+}
+
+#logout {
+    margin-left: auto;
+    margin-right: 50px;
+}
+
+.imagem {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.imagem-perfil {
+    width: 100px;
+    height: 100px;
+}
+
+.links {
+    margin-left: auto;
+    margin-right: 50px;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.containerPerfil {
+    margin-top: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#cardPerfil {
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+    text-align: center; 
+}
+
+#btnLogin, #btn{
+    background-color: #84A4FC;
+    color: #080808;
+}

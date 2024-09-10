@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <%- include('head'); %>
+  <link href="https://fonts.googleapis.com/css?family=Helvetica&display=swap" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css">
+
+    <link rel="stylesheet" type="text/css" href="css/metas.css" />
+</head>
+
+<body>
+  <div class="page-content page-container" id="page-content">
+    <div class="padding">
+      <div class="row container d-flex justify-content-center">
+        <div class="col-md-12">
+          <div class="card px-3">
+            <div class="card-body">
+              <h2 class="card-title">Metas</h2>
+              <div class="add-items d-flex">
+
+                <form action="/addMeta" method="POST" class="form-inline">
+                  <input type="text" class="form-control todo-list-input" name="meta" id="meta"
+                    placeholder="Adicionar nova meta">
+                  <button class="add btn btn-primary font-weight-bold todo-list-add-btn" type="submit"
+                    id="btnMeta">Adicionar</button>
+                </form>
+              </div>
+
+              <div class="list-wrapper">
+                <ul class="d-flex flex-column-reverse todo-list">
+                  <% dadosMeta1.forEach(function(dados) { %>
+                    <li>
+                      <div class="form-check">
+                        <label class="form-check-label">
+                          <input class="checkbox" type="checkbox" id="checkbox"
+                            onclick="window.location.href='/meta/<%=dados.id_meta %>';">
+                          <i class="input-helper"></i>
+                        </label>
+                      </div>
+                      <span class="item-description" onclick="window.location.href='/meta/<%=dados.id_meta %>';">
+                        <%= dados.descricao %>
+                      </span>
+
+                      <i class="remove">
+                        <a href="/editaMeta/<%=dados.id_meta%>" method="GET" class="btn button-primary">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-pencil" viewBox="0 0 16 16">
+                            <path
+                              d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
+                          </svg>
+                        </a>
+                      </i>
+
+                      <i class="edit">
+                        <a href="/delete/<%=dados.id_meta %>" method="POST" class="btn button-primary">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-trash3" viewBox="0 0 16 16">
+                            <path
+                              d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z" />
+                          </svg>
+                        </a>
+                      </i>
+                    </li>
+                    <% }) %>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-content page-container" id="page-content">
+    <div class="padding">
+      <div class="row container d-flex justify-content-center">
+        <div class="col-md-12">
+          <div class="card px-3">
+            <div class="card-body">
+              <h2 class="card-title">Metas cumpridas</h2>
+
+              <div class="list-wrapper">
+                <ul class="d-flex flex-column-reverse todo-list">
+                  <% dadosMeta2.forEach(function(dados) { %>
+                    <li>
+                      <div class="form-check">
+                        <label class="form-check-label">
+                          <input class="checkbox" type="checkbox" id="checkbox" checked
+                            onclick="window.location.href='/meta/<%= dados.id_meta %>';">
+                          <i class="input-helper"></i>
+                        </label>
+                      </div>
+                      <span class="item-description" style="text-decoration: line-through;"
+                        onclick="window.location.href='/meta/<%=dados.id_meta %>';">
+                        <%= dados.descricao %>
+                      </span>
+                      <i class="remove">
+                        <a href="/editaMeta/<%=dados.id_meta%>" method="GET" class="btn button-primary">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-pencil" viewBox="0 0 16 16">
+                            <path
+                              d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
+                          </svg>
+                        </a>
+                      </i>
+
+                      <i class="edit">
+
+                        <a href="/delete/<%=dados.id_meta %>" method="POST" class="btn button-primary">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-trash3" viewBox="0 0 16 16">
+                            <path
+                              d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z" />
+                          </svg>
+                        </a>
+
+                      </i>
+                    </li>
+                    <% }) %>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+<script>
+  (function ($) {
+    'use strict';
+    $(function () {
+      var todoListItem = $('.todo-list');
+      var todoListInput = $('.todo-list-input');
+      $('.todo-list-add-btn').on("click", function (event) {
+        event.preventDefault();
+
+        var item = $(this).prevAll('.todo-list-input').val();
+
+        if (item) {
+          todoListItem.append("<li><div class='form-check'><label class='form-check-label'><input class='checkbox' type='checkbox'/>" + item + "<i class='input-helper'></i></label></div><i class='remove mdi mdi-close-circle-outline'></i></li>");
+          todoListInput.val("");
+        }
+
+      });
+
+      todoListItem.on('change', '.checkbox', function () {
+        $(this).closest("li").toggleClass('completed');
+      });
+
+      todoListItem.on('click', '.remove', function () {
+        $(this).parent().remove();
+      });
+
+    });
+  })(jQuery); 
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    var checkbox = document.getElementById('checkbox');
+    var form = document.querySelector('.checkbox-form');
+
+    checkbox.addEventListener('change', () => {
+      if (checkbox.checked) {
+        form.submit();
+      } else {
+        form.submit();
+      }
+    });
+  });
+</script>
+
+</html>
